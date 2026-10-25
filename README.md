@@ -1,58 +1,197 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ✈️ Gezegen Backend API (Ticket Module)
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <b>Uçuş dolandyryş ulgami üçin döredilen RESTful API taslamasy (Laravel 13)</b>
 </p>
 
-## About Laravel
+<p align="center">
+  <a href="#-esasy-aýratynlyklar">Aýratynlyklar</a> •
+  <a href="#-brunoda-http-metody-bilen-barlamak">Bruno Guide</a> •
+  <a href="#-api-endpointleri">Endpointler</a> •
+  <a href="#-gurmak-we-işletmek">Gurnama</a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Esasy Aýratynlyklar
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Framework:** Laravel 13 (Modern PHP Attributes `#[Fillable(...)]` ulanmak bilen).
+- **API Prefix:** `/api/v1/`
+- **Maglumat Çeşmesi:** Factory ulanylman, gönüden-göni hakyky maglumatlar (Real Data) we aýratyn Seederler arkaly doldurulan maglumat bazasy.
+- **Test Gurallary:** Bruno API Client arkaly dolandyryş we barlag.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🧪 Bruno-da HTTP Metodlary Nädip Ulanylmaly?
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Taslamanyň API-lerini barlamak üçin **Bruno** programmasyny ulanýarys. Ähli requestler üçin esasy salgy (Base URL):
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+> `http://127.0.0.1:8000/api/v1`
 
-## Agentic Development
+Bruno-da her bir HTTP metodyny ulanmak üçin aşakdaky ädimleri berjaý ediň:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. **GET (Maglumatlary almak):**
+    - Metody `GET` edip saýlaň.
+    - URL ýerine barlajak endpointiňizi ýazyň (meselem: `http://127.0.0.1:8000/api/v1/tickets`).
+    - **Send** düwmäni basyň. Jogap `200 OK` statusy bilen JSON formatda çykar.
 
-```bash
-composer require laravel/boost --dev
+2. **POST (Täze maglumat goşmak):**
+    - Metody `POST` edip üýtgediň.
+    - URL ýerine endpointi ýazyň (meselem: `http://127.0.0.1:8000/api/v1/tickets`).
+    - **Headers** bölegine `Content-Type: application/json` we `Accept: application/json` goşuň (eger awtomatiki goşulmadyk bolsa).
+    - **Body** tabyna geçip, **JSON** formatyny saýlaň we iberdiljek maglumatlary ýazyň (aşakdaky mysallar ýaly).
+    - **Send** düwmäni basyň (`201 Created` ýa-da `200 OK` gelmeli).
 
-php artisan boost:install
+3. **PUT / PATCH (Maglumatlary üýtgetmek):**
+    - Metody `PUT` ýa-da `PATCH` saýlaň.
+    - ID görkezmek bilen URL ýazyň (meselem: `http://127.0.0.1:8000/api/v1/tickets/1`).
+    - **Body** (JSON) arkaly üýtgetmek isleýän maglumatlaryňyzy iberiň.
+
+4. **DELETE (Maglumat pozmak):**
+    - Metody `DELETE` saýlaň.
+    - URL: `http://127.0.0.1:8000/api/v1/tickets/1` görnüşinde ýazyp **Send** basyň.
+
+---
+
+## 📡 API Endpointleri we Mysallar
+
+### 🌍 1. Howa Menzilleri (Airports)
+
+| HTTP Metody | Endpoint                | Düşündiriş                             |
+| :---------- | :---------------------- | :------------------------------------- |
+| `GET`       | `/api/v1/airports`      | Ähli howa menzilleriniň sanawyny almak |
+| `POST`      | `/api/v1/airports`      | Täze howa menzilini goşmak             |
+| `GET`       | `/api/v1/airports/{id}` | Belli bir howa menzilini görmek        |
+
+- **POST Request Body (Mysal):**
+
+```json
+{
+    "name": "Ashgabat International Airport",
+    "code": "ASB",
+    "city": "Ashgabat",
+    "country": "Turkmenistan"
+}
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+### ✈️ 2. Uçuşlar (Flights)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| HTTP Metody | Endpoint               | Düşündiriş                    |
+| :---------- | :--------------------- | :---------------------------- |
+| `GET`       | `/api/v1/flights`      | Ähli uçuşlaryň sanawyny almak |
+| `POST`      | `/api/v1/flights`      | Täze uçuş döretmek            |
+| `GET`       | `/api/v1/flights/{id}` | Belli bir uçuşy görmek        |
 
-## Code of Conduct
+- **POST Request Body (Mysal):**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```json
+{
+    "flight_number": "T5-875",
+    "departure_airport_id": 1,
+    "arrival_airport_id": 2,
+    "departure_time": "2026-11-01 10:00:00",
+    "arrival_time": "2026-11-01 14:00:00",
+    "price": 350.0,
+    "available_seats": 120
+}
+```
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 👤 3. Ýolagçylar (Passengers)
 
-## License
+| HTTP Metody | Endpoint                  | Düşündiriş                 |
+| :---------- | :------------------------ | :------------------------- |
+| `GET`       | `/api/v1/passengers`      | Ähli ýolagçylary almak     |
+| `POST`      | `/api/v1/passengers`      | Täze ýolagçy goşmak        |
+| `GET`       | `/api/v1/passengers/{id}` | Belli bir ýolagçyny görmek |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **POST Request Body (Mysal):**
+
+```json
+{
+    "first_name": "Aman",
+    "last_name": "Myradow",
+    "email": "aman@gmail.com",
+    "phone": "+99365112233",
+    "passport_number": "TME123456"
+}
+```
+
+---
+
+### 🎫 4. Biletler (Tickets)
+
+| HTTP Metody | Endpoint               | Düşündiriş                                                   |
+| :---------- | :--------------------- | :----------------------------------------------------------- |
+| `GET`       | `/api/v1/tickets`      | Ähli biletleri (Flight we Passenger baglanyşygy bilen) almak |
+| `POST`      | `/api/v1/tickets`      | Täze bilet sargyt etmek                                      |
+| `GET`       | `/api/v1/tickets/{id}` | Belli bir biletiň jikme-jik maglumatyny görmek               |
+| `PUT`       | `/api/v1/tickets/{id}` | Bileti üýtgetmek / täzelemek                                 |
+| `DELETE`    | `/api/v1/tickets/{id}` | Bileti pozmak / ýatyrmak                                     |
+
+- **POST Request Body (Mysal):**
+
+```json
+{
+    "flight_id": 1,
+    "passenger_id": 1,
+    "seat_number": "12A",
+    "ticket_code": "TCK-99182",
+    "status": "confirmed"
+}
+```
+
+- **GET /api/v1/tickets - Response (200 OK):**
+
+```json
+[
+    {
+        "id": 1,
+        "flight_id": 1,
+        "passenger_id": 1,
+        "seat_number": "12A",
+        "ticket_code": "TCK-99182",
+        "status": "confirmed",
+        "flight": {
+            "id": 1,
+            "flight_number": "T5-421"
+        },
+        "passenger": {
+            "id": 1,
+            "first_name": "Aman",
+            "last_name": "Myradow"
+        }
+    }
+]
+```
+
+---
+
+## 🛠️ Gurmak we İşletmek (Installation)
+
+Proýekti öz kompýuteriňizde işledmek üçin şu ädimleri ýerine ýetiriň:
+
+1. Repozitoriýany klonirläň:
+    ```bash
+    git clone https://github.com/han-pv/gezegen-backend.git
+    ```
+2. Baglanyşyklary ýükledin:
+    ```bash
+    composer install
+    ```
+3. Daşky gurşaw faýlyny dörediň:
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+4. Maglumat bazasyny migrasiýa edip, hakyky seeder maglumatlary ýükleyin:
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+5. Lokal serweri işledin:
+    ```bash
+    php artisan serve
+    ```

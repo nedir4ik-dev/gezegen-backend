@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('arrival_time');
             $table->decimal('price', 10, 2);
             $table->integer('available_seats');
+            $table->string('status')->default('Scheduled');
             $table->timestamps();
         });
     }

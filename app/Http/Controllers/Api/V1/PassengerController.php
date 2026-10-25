@@ -9,12 +9,27 @@ use Illuminate\Http\Request;
 
 class PassengerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $passengers = Passenger::latest()->paginate(15);
+        $query = Passenger::query();
+
+        if ($request->has('first_name')) {
+            $query->where('first_name', 'like', '%' . $request->query('first_name') . '%');
+        }
+
+        if ($request->has('last_name')) {
+            $query->where('last_name', 'like', '%' . $request->query('last_name') . '%');
+        }
+
+        if ($request->has('email')) {
+            $query->where('email', $request->query('email'));
+        }
+
+        if ($request->has('passport_number')) {
+            $query->where('passport_number', $request->query('passport_number'));
+        }
+
+        $passengers = $query->latest()->paginate(15);
 
         return response()->json([
             'success' => true,
@@ -22,9 +37,6 @@ class PassengerController extends Controller
         ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -44,9 +56,6 @@ class PassengerController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Passenger $passenger): JsonResponse
     {
         return response()->json([
@@ -55,9 +64,6 @@ class PassengerController extends Controller
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Passenger $passenger): JsonResponse
     {
         $validated = $request->validate([
@@ -77,9 +83,6 @@ class PassengerController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Passenger $passenger): JsonResponse
     {
         $passenger->delete();

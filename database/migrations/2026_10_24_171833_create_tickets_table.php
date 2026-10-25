@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('passenger_id')->constrained('passengers')->onDelete('cascade');
             $table->string('seat_number');
             $table->string('ticket_code')->unique();
+            $table->decimal('price', 10, 2);
             $table->enum('status', ['booked', 'confirmed', 'cancelled'])->default('booked');
             $table->timestamps();
         });

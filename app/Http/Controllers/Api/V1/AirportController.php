@@ -9,12 +9,19 @@ use Illuminate\Http\JsonResponse;
 
 class AirportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $airports = Airport::latest()->paginate(15);
+        $query = Airport::query();
+
+        if ($request->has('city')) {
+            $query->where('city', $request->query('city'));
+        }
+
+        if ($request->has('country')) {
+            $query->where('country', $request->query('country'));
+        }
+
+        $airports = $query->latest()->paginate(15);
 
         return response()->json([
             'success' => true,
@@ -22,9 +29,6 @@ class AirportController extends Controller
         ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
@@ -43,9 +47,6 @@ class AirportController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Airport $airport): JsonResponse
     {
         return response()->json([
@@ -54,9 +55,6 @@ class AirportController extends Controller
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Airport $airport): JsonResponse
     {
         $validated = $request->validate([
@@ -75,9 +73,6 @@ class AirportController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Airport $airport): JsonResponse
     {
         $airport->delete();

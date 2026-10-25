@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code', 10)->unique();
             $table->string('city');
             $table->string('country');
+            $table->string('timezone')->default('Asia/Ashgabat');
             $table->timestamps();
         });
     }

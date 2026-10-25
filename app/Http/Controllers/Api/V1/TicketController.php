@@ -9,9 +9,23 @@ use Illuminate\Http\JsonResponse;
 
 class TicketController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $tickets = Ticket::with(['passenger', 'flight'])->latest()->paginate(15);
+        $query = Ticket::with(['passenger', 'flight']);
+
+        if ($request->has('status')) {
+            $query->where('status', $request->query('status'));
+        }
+
+        if ($request->has('passenger_id')) {
+            $query->where('passenger_id', $request->query('passenger_id'));
+        }
+
+        if ($request->has('flight_id')) {
+            $query->where('flight_id', $request->query('flight_id'));
+        }
+
+        $tickets = $query->latest()->paginate(15);
 
         return response()->json([
             'success' => true,

@@ -2,6 +2,7 @@
 
 namespace App\Models\Ticket;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 ])]
 class Airport extends Model
 {
+    use HasFactory;
+
     public function departureFlights(): HasMany
     {
         return $this->hasMany(Flight::class, 'departure_airport_id');
