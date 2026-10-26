@@ -10,14 +10,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable([
     'flight_id',
     'passenger_id',
-    'seat_number',
     'ticket_code',
-    'status',
+    'seat_number',
+    'price',
+    'status'
 ])]
 class Ticket extends Model
 {
     use HasFactory;
-    
+
     public function flight(): BelongsTo
     {
         return $this->belongsTo(Flight::class);

@@ -30,4 +30,5 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('flights', FlightController::class);
     Route::apiResource('passengers', PassengerController::class);
     Route::apiResource('tickets', TicketController::class);
+    Route::post('/bookings', [TicketController::class, 'store']);
 });

@@ -21,7 +21,7 @@ class PassengerFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'passport_number' => 'B' . fake()->unique()->numerify('#######'),
+            'passport_number' => 'I-AG' . fake()->unique()->numerify('#######'),
             'phone' => fake()->phoneNumber(),
         ];
     }

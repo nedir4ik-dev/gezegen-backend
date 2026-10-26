@@ -19,7 +19,7 @@ class AirportSeeder extends Seeder
                 'code' => 'ASB',
                 'city' => 'Ashgabat',
                 'country' => 'Turkmenistan',
-                'timezone' => 'Asia/Ashgabat', // Goşuldy
+                'timezone' => 'Asia/Ashgabat',
             ],
             [
                 'name' => 'Dubai International Airport',
