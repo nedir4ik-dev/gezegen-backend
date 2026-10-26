@@ -15,7 +15,6 @@ class PassengerSeeder extends Seeder
     {
         // Passenger::factory(10)->create();
 
-
         $passengers = [
             [
                 'first_name' => 'Aman',

@@ -22,6 +22,7 @@ class FlightFactory extends Factory
 
         return [
             'flight_number' => 'FL-' . fake()->unique()->numerify('###'),
+            'airline' => 'Turkish Airlines',
             'departure_airport_id' => Airport::inRandomOrder()->first()?->id ?? Airport::factory(),
             'arrival_airport_id' => Airport::inRandomOrder()->first()?->id ?? Airport::factory(),
             'departure_time' => $departureTime,

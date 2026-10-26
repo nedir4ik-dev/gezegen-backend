@@ -42,8 +42,8 @@ class TicketController extends Controller
             'passengers' => 'required|array|min:1',
             'passengers.*.first_name' => 'required|string|max:255',
             'passengers.*.last_name' => 'required|string|max:255',
-            'passengers.*.type' => 'required|in:adult,child,infant', // Uly, çaga ýa-da bäbek
-            'passengers.*.passport_number' => 'nullable|string|max:50', // Çagalar üçin şahadatnama hem boluberýär
+            'passengers.*.type' => 'required|in:adult,child,infant',
+            'passengers.*.passport_number' => 'nullable|string|max:50',
             'passengers.*.email' => 'nullable|email|max:255',
             'passengers.*.phone' => 'nullable|string|max:50',
         ]);

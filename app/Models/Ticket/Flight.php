@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'flight_number',
+    'airline',
     'departure_airport_id',
     'arrival_airport_id',
     'departure_time',

@@ -39,6 +39,7 @@ class FlightController extends Controller
     {
         $validated = $request->validate([
             'flight_number' => 'required|string|max:50|unique:flights,flight_number',
+            'airline' => 'required|string|max:100',
             'departure_airport_id' => 'required|exists:airports,id',
             'arrival_airport_id' => 'required|exists:airports,id|different:departure_airport_id',
             'departure_time' => 'required|date',
@@ -81,6 +82,7 @@ class FlightController extends Controller
     {
         $validated = $request->validate([
             'flight_number' => 'sometimes|required|string|max:50|unique:flights,flight_number,' . $flight->id,
+            'airline' => 'sometimes|required|string|max:100',
             'departure_airport_id' => 'sometimes|required|exists:airports,id',
             'arrival_airport_id' => 'sometimes|required|exists:airports,id|different:departure_airport_id',
             'departure_time' => 'sometimes|required|date',

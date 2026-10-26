@@ -13,6 +13,7 @@ class AirportSeeder extends Seeder
      */
     public function run(): void
     {
+        
         $airports = [
             [
                 'name' => 'Ashgabat International Airport',

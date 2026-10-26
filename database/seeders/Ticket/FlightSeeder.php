@@ -18,6 +18,7 @@ class FlightSeeder extends Seeder
         $flights = [
             [
                 'flight_number' => 'T5-875',
+                'airline' => 'Türkmenhowaýollary',
                 'departure_airport_id' => 1, // Ashgabat
                 'arrival_airport_id' => 2,   // Dubai
                 'departure_time' => '2026-11-01 08:00:00',
@@ -28,6 +29,7 @@ class FlightSeeder extends Seeder
             ],
             [
                 'flight_number' => 'TK-325',
+                'airline' => 'Turkish Airlines',
                 'departure_airport_id' => 1, // Ashgabat
                 'arrival_airport_id' => 3,   // Istanbul
                 'departure_time' => '2026-11-02 14:00:00',
@@ -38,6 +40,7 @@ class FlightSeeder extends Seeder
             ],
             [
                 'flight_number' => 'BA-681',
+                'airline' => 'British Airways',
                 'departure_airport_id' => 3, // Istanbul
                 'arrival_airport_id' => 4,   // London
                 'departure_time' => '2026-11-03 10:30:00',
