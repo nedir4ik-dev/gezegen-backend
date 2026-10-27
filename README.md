@@ -84,15 +84,15 @@ Bruno-da her bir HTTP metodyny ulanmak üçin aşakdaky ädimleri berjaý ediň:
 | `POST`      | `/api/v1/flights`      | Täze uçuş döretmek            |
 | `GET`       | `/api/v1/flights/{id}` | Belli bir uçuşy görmek        |
 
-- **POST Request Body (Mysal):**
+- **POST Request Body (Mysal):** _(Bellik: `arrival_time` zerur däl, `airline` bolsa awiakompaniýa adyny görkezmek üçin ulanylýar)_
 
 ```json
 {
     "flight_number": "T5-875",
+    "airline": "Türkmenhowaýollary",
     "departure_airport_id": 1,
     "arrival_airport_id": 2,
     "departure_time": "2026-11-01 10:00:00",
-    "arrival_time": "2026-11-01 14:00:00",
     "price": 350.0,
     "available_seats": 120
 }
@@ -116,7 +116,7 @@ Bruno-da her bir HTTP metodyny ulanmak üçin aşakdaky ädimleri berjaý ediň:
     "last_name": "Myradow",
     "email": "aman@gmail.com",
     "phone": "+99365112233",
-    "passport_number": "TME123456"
+    "passport_number": "I-AG7712398"
 }
 ```
 
@@ -170,16 +170,135 @@ Bruno-da her bir HTTP metodyny ulanmak üçin aşakdaky ädimleri berjaý ediň:
 
 ---
 
+## ⚠️ HTTP Status Kodlary we Jogap Mysallary (Responses)
+
+|          Status Kod           | Düşündiriş                                                |
+| :---------------------------: | :-------------------------------------------------------- |
+|          **200 OK**           | Sorag üstünlikli ýerine ýetirildi (GET / PUT)             |
+|        **201 Created**        | Täze maglumat ýa-da sargyt üstünlikli döredildi (POST)    |
+|      **400 Bad Request**      | Iberilen maglumatlar nädogry ýa-da şertlere gabat gelmedi |
+|     **401 Unauthorized**      | Ulanyjy autensifikasiýadan geçmedik                       |
+|       **403 Forbidden**       | Bu amaly ýerine ýetirmäge ygtyýar ýok                     |
+|       **404 Not Found**       | Gözlenen resurs, uçar ýa-da bilet tapylmady               |
+| **422 Unprocessable Entity**  | Maglumatlar barlagdan (Validation) geçip bilmedi          |
+| **500 Internal Server Error** | Serwer tarapynda garaşylmadyk näsazlyk ýüze çykdy         |
+|  **503 Service Unavailable**  | Serwer wagtlaýyn elýeterli däl                            |
+
+---
+
+### 🟢 1. Üstünlikli Jogaplar (Success Responses)
+
+#### `200 OK`
+
+```json
+{
+    "success": true,
+    "message": "Maglumatlar üstünlikli alyndy.",
+    "data": {
+        "id": 1,
+        "flight_number": "T5-875",
+        "airline": "Türkmenhowaýollary"
+    }
+}
+```
+
+#### `201 Created`
+
+```json
+{
+    "success": true,
+    "message": "Täze resource üstünlikli döredildi.",
+    "data": {
+        "id": 15,
+        "flight_number": "T5-875"
+    }
+}
+```
+
+---
+
+### 🟡 2. Klient Tarapdaky Ýalňyşlyklar (Client Errors)
+
+#### `400 Bad Request`
+
+```json
+{
+    "success": false,
+    "message": "Nädogry ýa-da kemis sorag (Bad Request)."
+}
+```
+
+#### `401 Unauthorized`
+
+```json
+{
+    "success": false,
+    "message": "Ulanyjy autensifikasiýadan geçmedik."
+}
+```
+
+#### `403 Forbidden`
+
+```json
+{
+    "success": false,
+    "message": "Bu amaly ýerine ýetirmäge ygtyýaryňyz ýok."
+}
+```
+
+#### `404 Not Found`
+
+```json
+{
+    "success": false,
+    "message": "Gözlenen resource tapylmady."
+}
+```
+
+```json
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "flight_number": ["The flight number field is required."],
+        "price": ["The price must be a number."]
+    }
+}
+```
+
+---
+
+### 🔴 3. Serwer Tarapdaky Ýalňyşlyklar (Server Errors)
+
+#### `500 Internal Server Error`
+
+```json
+{
+    "success": false,
+    "message": "Serwerde garaşylmadyk näsazlyk ýüze çykdy.",
+    "error": "QueryException: Database connection failed."
+}
+```
+
+#### `503 Service Unavailable`
+
+```json
+{
+    "success": false,
+    "message": "Serwer wagtlaýyn elýeterli däl. Soňrak synanyşyň."
+}
+```
+
 ## 🛠️ Gurmak we İşletmek (Installation)
 
 Proýekti öz kompýuteriňizde işledmek üçin şu ädimleri ýerine ýetiriň:
 
 1. Repozitoriýany klonirläň:
     ```bash
-    git clone https://github.com/han-pv/gezegen-backend.git
+    git clone https://github.com/nedir4ik-dev/gezegen-backend.git
     ```
 2. Baglanyşyklary ýükledin:
     ```bash
+    cd gezegen-backend
     composer install
     ```
 3. Daşky gurşaw faýlyny dörediň:
