@@ -50,6 +50,48 @@ class AirportSeeder extends Seeder
                 'country' => 'United States',
                 'timezone' => 'America/New_York',
             ],
+            [
+                'name' => 'Frankfurt Airport',
+                'code' => 'FRA',
+                'city' => 'Frankfurt',
+                'country' => 'Germany',
+                'timezone' => 'Europe/Berlin',
+            ],
+            [
+                'name' => 'Charles de Gaulle Airport',
+                'code' => 'CDG',
+                'city' => 'Paris',
+                'country' => 'France',
+                'timezone' => 'Europe/Paris',
+            ],
+            [
+                'name' => 'Hamad International Airport',
+                'code' => 'DOH',
+                'city' => 'Doha',
+                'country' => 'Qatar',
+                'timezone' => 'Asia/Qatar',
+            ],
+            [
+                'name' => 'Singapore Changi Airport',
+                'code' => 'SIN',
+                'city' => 'Singapore',
+                'country' => 'Singapore',
+                'timezone' => 'Asia/Singapore',
+            ],
+            [
+                'name' => 'Tokyo Haneda Airport',
+                'code' => 'HND',
+                'city' => 'Tokyo',
+                'country' => 'Japan',
+                'timezone' => 'Asia/Tokyo',
+            ],
+            [
+                'name' => 'Beijing Capital International Airport',
+                'code' => 'PEK',
+                'city' => 'Beijing',
+                'country' => 'China',
+                'timezone' => 'Asia/Shanghai',
+            ],
         ];
 
         foreach ($airports as $airport) {
